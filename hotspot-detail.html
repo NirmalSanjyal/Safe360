@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment | Safe360 Detail</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link to your existing CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <!-- LOGO -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            
+            <!-- MODIFIED: Uses javascript:history.back() to return to the 360 view -->
+            <a href="javascript:history.back()" class="btn-back" style="margin-left: auto;" aria-label="Back to Simulator">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Simulator
+            </a>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div id="hotspot-content">
+                <!-- Data will be injected here -->
+                <div class="contact-box" style="text-align: center; padding: 50px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--secondary);" aria-hidden="true"></i>
+                    <p style="margin-top: 20px;">Loading details...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Safe360 Enterprise Project. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DATA OBJECT (Unchanged)
+        const hotspotData = {
+            "1": {
+                title: "Suspicious Phishing Email",
+                icon: "fa-envelope-open-text",
+                scenario: "A warehouse office PC shows an email claiming to be from 'IT Support' asking for urgent login verification.",
+                risk: "Phishing attack leading to stolen credentials and network-wide compromise.",
+                action: "Do not click links; do not download attachments; report the email to IT immediately.",
+                outcome: "Protecting user identity and preventing unauthorized system access."
+            },
+            "2": {
+                title: "Unattended Workstation",
+                icon: "fa-desktop",
+                scenario: "A logged-in computer is left unattended in a high-traffic dispatch office.",
+                risk: "Unauthorized access to company systems, data theft, or accidental record modification.",
+                action: "Lock the screen immediately (Win + L) and remind staff of the lock-policy.",
+                outcome: "Maintaining physical security of digital access points."
+            },
+            "3": {
+                title: "Unknown USB Device",
+                icon: "fa-usb",
+                scenario: "A USB stick is found lying on a desk or near a warehouse terminal.",
+                risk: "Malware infection, ransomware entry, or automated data exfiltration.",
+                action: "Do not plug it in. Hand it over to the cybersecurity team or IT security.",
+                outcome: "Preventing hardware-based malware from entering the secure perimeter."
+            },
+            "4": {
+                title: "Fake Courier Call",
+                icon: "fa-phone-volume",
+                scenario: "A caller claims to be a courier asking for an OTP or system password to 'confirm delivery'.",
+                risk: "Voice-based social engineering leading to complete account takeover.",
+                action: "Refuse to share information. Verify the request through official vendor channels.",
+                outcome: "Strengthening the human firewall against social manipulation."
+            },
+            "5": {
+                title: "QR Code on Parcel",
+                icon: "fa-qrcode",
+                scenario: "A QR code on a label claims to show 'updated invoice' or 'priority tracking'.",
+                risk: "Directing users to malicious phishing websites or automatic malware downloads.",
+                action: "Avoid scanning unknown QR codes. Use official tracking numbers via browser.",
+                outcome: "Avoiding modern mobile phishing (Quishing) tactics."
+            },
+            "6": {
+                title: "Personal Mobile Security",
+                icon: "fa-mobile-screen",
+                scenario: "An employee connects a personal, unmanaged phone to the secure corporate Wi-Fi.",
+                risk: "Data leakage or malware bridging from an insecure device to the secure network.",
+                action: "Follow company BYOD (Bring Your Own Device) rules; use Guest Wi-Fi for personal use.",
+                outcome: "Network segmentation and device integrity management."
+            }
+        };
+
+        // CONTENT INJECTION LOGIC
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const container = document.getElementById('hotspot-content');
+
+            if (id && hotspotData[id]) {
+                const item = hotspotData[id];
+                container.innerHTML = `
+                    <div class="contact-box" style="max-width: 800px; text-align: left; background: white; margin: auto;">
+                        <div style="text-align: center; margin-bottom: 40px;">
+                            <i class="fa-solid ${item.icon}" style="font-size: 5rem; color: var(--secondary); margin-bottom: 20px;" aria-hidden="true"></i>
+                            <h1 style="color: var(--primary); font-size: 2.5rem; line-height: 1.2;">${item.title}</h1>
+                        </div>
+
+                        <div style="display: grid; gap: 30px;">
+                            <div style="background: #f1f7ff; padding: 25px; border-radius: 12px; border-left: 6px solid var(--secondary);">
+                                <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The Scenario</h3>
+                                <p style="font-size: 1.1rem; line-height: 1.6; color: #333;">${item.scenario}</p>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                                <div style="background: #fff5f5; padding: 25px; border-radius: 12px; border-top: 4px solid #c53030;">
+                                    <h3 style="color: #c53030; margin-bottom: 10px; font-size: 1.2rem;"><i class="fa-solid fa-biohazard" aria-hidden="true"></i> The Risk</h3>
+                                    <p style="color: #444;">${item.risk}</p>
+                                </div>
+                                <div style="background: #f0fff4; padding: 25px; border-radius: 12px; border-top: 4px solid #2f855a;">
+                                    <h3 style="color: #2f855a; margin-bottom: 10px; font-size: 1.2rem;"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Correct Action</h3>
+                                    <p style="color: #444;">${item.action}</p>
+                                </div>
+                            </div>
+
+                            <div style="border-top: 1px solid #eee; padding-top: 25px; margin-top: 10px; text-align: center;">
+                                <h4 style="color: var(--gray); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 10px;">Safe360 Learning Outcome</h4>
+                                <p style="font-weight: 700; color: var(--primary); font-size: 1.3rem;">${item.outcome}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // FALLBACK: Also uses history.back()
+                container.innerHTML = `
+                    <div class="contact-box" style="text-align:center;">
+                        <h1>Scenario Not Found</h1>
+                        <a href="javascript:history.back()" class="btn btn-primary">Back to Simulator</a>
+                    </div>`;
+            }
+        });
+    </script>
+</body>
+</html>

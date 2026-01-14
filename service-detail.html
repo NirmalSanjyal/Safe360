@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Detail | Safe360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .detail-hero {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .detail-icon {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        .detail-content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .benefit-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .benefit-list i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+        @media(max-width: 768px) {
+            .detail-content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="services.html" class="active">Back to Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Content injected by JS -->
+    </main>
+
+    <script>
+        // SERVICE DATA DATABASE
+        const serviceData = {
+            "reporting": {
+                title: "Digital Incident Reporting",
+                icon: "fa-bolt-lightning",
+                description: "A streamlined mobile interface allowing frontline workers to capture hazards, near-misses, and incidents in seconds.",
+                features: [
+                    "Offline capability for remote sites",
+                    "Instant photo/video evidence upload",
+                    "Automated GPS geolocation tagging",
+                    "Immediate push notifications to supervisors"
+                ],
+                benefits: [
+                    "Reduce reporting lag time by 90%",
+                    "Increase data accuracy",
+                    "Eliminate paper trails",
+                    "Faster corrective actions"
+                ]
+            },
+            "risk": {
+                title: "Smart Risk Assessment",
+                icon: "fa-shield-halved",
+                description: "Dynamic Job Safety Analysis (JSA) tools that adapt to changing worksite conditions.",
+                features: [
+                    "Pre-loaded hazard libraries",
+                    "Risk matrix heatmaps",
+                    "Approval workflow integration",
+                    "Digital signature capture"
+                ],
+                benefits: [
+                    "Standardize safety protocols",
+                    "Ensure regulatory compliance",
+                    "Visually identify high-risk areas",
+                    "Protect worker liability"
+                ]
+            },
+            "lms": {
+                title: "LMS & Training Tracking",
+                icon: "fa-graduation-cap",
+                description: "A centralized Learning Management System ensuring your workforce is qualified and compliant.",
+                features: [
+                    "Automated expiry alerts",
+                    "QR code badge scanning for verification",
+                    "Integration with external training providers",
+                    "Skill gap analysis reports"
+                ],
+                benefits: [
+                    "Never miss a certification renewal",
+                    "Instant onsite competency checks",
+                    "Reduce administrative overhead",
+                    "Foster a culture of learning"
+                ]
+            },
+            "analytics": {
+                title: "Predictive Analytics",
+                icon: "fa-chart-line",
+                description: "Turn historical safety data into future prevention strategies using AI-driven insights.",
+                features: [
+                    "Customizable KPI dashboards",
+                    "Trend forecasting algorithms",
+                    "Incident root cause breakdown",
+                    "Exportable executive reports"
+                ],
+                benefits: [
+                    "Move from reactive to proactive",
+                    "Identify hidden systemic issues",
+                    "Justify safety budget with data",
+                    "Lower insurance premiums"
+                ]
+            },
+            "compliance": {
+                title: "Compliance Auditing",
+                icon: "fa-file-circle-check",
+                description: "Digital audit tools designed for ISO 45001, OSHA, and internal corporate standards.",
+                features: [
+                    "Mobile-friendly audit checklists",
+                    "Non-conformance tracking",
+                    "Corrective Action Preventative Action (CAPA)",
+                    "Audit trail history log"
+                ],
+                benefits: [
+                    "Audit-ready at any moment",
+                    "Transparent accountability",
+                    "Streamlined regulatory reporting",
+                    "Consistent global standards"
+                ]
+            },
+            "emergency": {
+                title: "Emergency Response",
+                icon: "fa-truck-medical",
+                description: "Critical tools for managing evacuations, medical emergencies, and crisis communication.",
+                features: [
+                    "Digital muster roll calls",
+                    "Real-time safe/unsafe status tracking",
+                    "Mass SMS/Push notification alerts",
+                    "Offline building blueprints"
+                ],
+                benefits: [
+                    "Account for every life in minutes",
+                    "Coordinate response teams effectively",
+                    "Reduce panic during drills",
+                    "Post-emergency analysis"
+                ]
+            }
+        };
+
+        // RENDER LOGIC
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const container = document.getElementById('main-content');
+
+        if (id && serviceData[id]) {
+            const data = serviceData[id];
+            
+            container.innerHTML = `
+                <section class="detail-hero">
+                    <div class="container">
+                        <i class="fa-solid ${data.icon} detail-icon"></i>
+                        <h1 style="font-size: 3rem;">${data.title}</h1>
+                        <p style="font-size: 1.2rem; max-width: 700px; margin: 20px auto; opacity: 0.9;">${data.description}</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="container">
+                        <div class="back-nav">
+                            <a href="services.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Back to All Services</a>
+                        </div>
+                        
+                        <div class="detail-content-grid">
+                            <div>
+                                <h2 style="color: var(--primary); margin-bottom: 20px;">Technical Features</h2>
+                                ${data.features.map(feat => `
+                                    <div class="feature-box">
+                                        <h4 style="margin: 0; color: var(--primary);"><i class="fa-solid fa-check-circle" style="color:var(--secondary); margin-right:10px;"></i> ${feat}</h4>
+                                    </div>
+                                `).join('')}
+                                
+                                <div style="margin-top: 30px; background: #f8f9fa; padding: 30px; border-radius: 12px; border-left: 5px solid var(--accent);">
+                                    <h3>Why this matters?</h3>
+                                    <p>Integrating ${data.title} into your workflow removes friction, ensuring that safety isn't an obstacle to production, but a driver of efficiency.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="background: var(--primary); color: white; padding: 30px; border-radius: 12px; position: sticky; top: 20px;">
+                                    <h3 style="color: var(--secondary); margin-bottom: 20px;">Key Benefits</h3>
+                                    <ul class="benefit-list" style="list-style: none; padding: 0;">
+                                        ${data.benefits.map(ben => `<li><i class="fa-solid fa-star"></i> ${ben}</li>`).join('')}
+                                    </ul>
+                                    <div style="margin-top: 30px; text-align: center;">
+                                        <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary); width: 100%; display:block;">Request Demo</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        } else {
+            container.innerHTML = `<div class="container" style="text-align:center; padding: 100px 0;"><h2>Service Not Found</h2><a href="services.html" class="btn btn-primary">Return to Services</a></div>`;
+        }
+    </script>
+</body>
+</html>

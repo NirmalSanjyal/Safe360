@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Simulator | Safe360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* --- PROFESSIONAL CYBER THEME --- */
+        :root {
+            --cyber-cyan: #00f2ff;
+            --cyber-blue: #0062ff;
+            --cyber-dark: #050a14;
+            --cyber-glass: rgba(10, 20, 40, 0.9);
+            --emergency-red: #ff2a6d;
+            --success-green: #00ff9d;
+        }
+
+        body { font-family: 'Inter', sans-serif; }
+
+        .v-tour-container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            background: var(--cyber-dark);
+            overflow: hidden;
+            border-radius: 24px;
+            cursor: grab;
+            border: 3px solid rgba(0, 242, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* FULL SCREEN OVERRIDES */
+        .v-tour-container:fullscreen, .v-tour-container:-webkit-full-screen {
+            width: 100vw; height: 100vh; border-radius: 0; border: none;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .panorama-scene {
+            position: absolute;
+            height: 1500px; width: 4500px;
+            background-image: linear-gradient(rgba(5, 10, 20, 0.2), rgba(5, 10, 20, 0.2)), 
+                              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=4500&q=80');
+            background-size: cover;
+            left: 0; top: -400px;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* --- HOTSPOTS --- */
+        .v-hotspot {
+            position: absolute; width: 54px; height: 54px;
+            background: rgba(0, 242, 255, 0.15);
+            border: 2px solid var(--cyber-cyan);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--cyber-cyan);
+            animation: pulse-cyber 2s infinite;
+            text-decoration: none; z-index: 10;
+            backdrop-filter: blur(4px);
+        }
+        .v-hotspot:hover { transform: scale(1.2); background: var(--emergency-red); border-color: #fff; color: #fff; }
+
+        @keyframes pulse-cyber {
+            0% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 242, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+        }
+
+        /* --- HUD --- */
+        .timer-hud {
+            position: absolute; top: 25px; right: 25px;
+            background: var(--cyber-glass); color: var(--cyber-cyan);
+            padding: 12px 24px; border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace; font-weight: 700;
+            font-size: 1.6rem; z-index: 101;
+            border: 2px solid var(--cyber-cyan);
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .simulator-ui {
+            position: absolute; top: 100px; right: 25px;
+            background: var(--cyber-glass); color: #fff;
+            padding: 24px; border-radius: 16px; width: 280px;
+            backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none; z-index: 100;
+        }
+
+        .btn-fullscreen-overlay {
+            position: absolute; bottom: 25px; right: 25px;
+            background: var(--cyber-glass); color: var(--cyber-cyan);
+            border: 2px solid var(--cyber-cyan); border-radius: 12px;
+            padding: 12px 18px; cursor: pointer; z-index: 100;
+        }
+
+        /* --- MODAL STYLING (PROFESSIONAL UPGRADE) --- */
+        .modal-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 5, 15, 0.95);
+            z-index: 2000; display: none;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--cyber-dark);
+            width: 90%; max-width: 700px;
+            border-radius: 20px; border: 1px solid var(--cyber-cyan);
+            padding: 40px; position: relative;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+            color: #fff;
+        }
+
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 { font-family: 'JetBrains Mono', monospace; color: var(--cyber-cyan); margin: 0; }
+
+        .progress-bar-container {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin-bottom: 20px; overflow: hidden;
+        }
+        .progress-fill { height: 100%; background: var(--cyber-cyan); width: 0%; transition: 0.5s ease; }
+
+        .training-text { font-size: 1.1rem; line-height: 1.8; color: #ccd6f6; }
+        .training-text b { color: var(--cyber-cyan); }
+
+        /* --- QUIZ OPTIONS --- */
+        .quiz-option {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            padding: 18px; margin-bottom: 12px; border-radius: 10px;
+            cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; gap: 15px;
+            font-size: 1rem;
+        }
+        .quiz-option:hover { background: rgba(0, 242, 255, 0.1); border-color: var(--cyber-cyan); }
+        .quiz-option.selected { background: var(--cyber-blue); border-color: #fff; }
+        .quiz-option.correct { background: rgba(0, 255, 157, 0.2); border-color: var(--success-green); color: var(--success-green); }
+        .quiz-option.wrong { background: rgba(255, 42, 109, 0.2); border-color: var(--emergency-red); color: var(--emergency-red); }
+
+        .btn-modal {
+            padding: 12px 28px; border-radius: 8px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer;
+            font-family: 'JetBrains Mono', monospace; border: none; transition: 0.3s;
+        }
+        .btn-primary-modal { background: var(--cyber-cyan); color: var(--cyber-dark); }
+        .btn-primary-modal:hover { background: #fff; box-shadow: 0 0 20px var(--cyber-cyan); }
+
+        .feedback-text {
+            margin-top: 15px; padding: 15px; border-radius: 8px;
+            font-weight: bold; font-family: 'JetBrains Mono', monospace;
+            text-align: center; display: none;
+        }
+    </style>
+</head>
+<body class="light-bg">
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            <div class="header-actions">
+                <button onclick="openTraining()" class="btn-nav"><i class="fa-solid fa-graduation-cap"></i> Training</button>
+                <button onclick="openQuiz()" class="btn-nav"><i class="fa-solid fa-clipboard-question"></i> Quiz</button>
+                <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Exit Simulator</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="v-tour-container" id="tourViewport">
+                <div class="panorama-scene" id="panorama">
+                    <a href="hotspot-detail.html?id=1" class="v-hotspot" style="top: 40%; left: 8%;" data-label="Node Breach"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="hotspot-detail.html?id=2" class="v-hotspot" style="top: 35%; left: 25%;" data-label="Terminal Access"><i class="fa-solid fa-desktop"></i></a>
+                    <a href="hotspot-detail.html?id=3" class="v-hotspot" style="top: 70%; left: 45%;" data-label="Hardware Risk"><i class="fa-solid fa-usb"></i></a>
+                    <a href="hotspot-detail.html?id=4" class="v-hotspot" style="top: 30%; left: 60%;" data-label="Uplink Breach"><i class="fa-solid fa-phone"></i></a>
+                    <a href="hotspot-detail.html?id=5" class="v-hotspot" style="top: 55%; left: 78%;" data-label="Packet Leak"><i class="fa-solid fa-qrcode"></i></a>
+                    <a href="hotspot-detail.html?id=6" class="v-hotspot" style="top: 45%; left: 92%;" data-label="IoT Vulnerability"><i class="fa-solid fa-mobile-screen"></i></a>
+                </div>
+
+                <div class="timer-hud">
+                    <i class="fa-regular fa-clock"></i> <span id="sessionTimer">03:00</span>
+                </div>
+
+                <div class="simulator-ui">
+                    <h4 style="color: var(--cyber-cyan);"><i class="fa-solid fa-shield-halved"></i> Audit Protocol</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Identify 6 high-priority security breaches in this sector.</p>
+                </div>
+
+                <button onclick="toggleFullScreen()" class="btn-fullscreen-overlay">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+
+                <!-- TRAINING MODAL -->
+                <div id="trainingModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="trainingTitle">Training Protocol</h2>
+                            <button class="close-modal" onclick="closeModal('trainingModal')" style="background:none; border:none; color:#fff; cursor:pointer; font-size:1.5rem;">&times;</button>
+                        </div>
+                        <div class="progress-bar-container"><div class="progress-fill" id="trainProgress"></div></div>
+                        <div class="step-indicator" id="trainingStep" style="color:var(--cyber-cyan); font-family:'JetBrains Mono'; margin-bottom:10px;"></div>
+                        <div id="trainingBody" class="training-text"></div>
+                        <div class="nav-btn-group" style="display:flex; justify-content:space-between; margin-top:30px;">
+                            <button class="btn-modal" onclick="prevTraining()" id="btnPrevTrain" style="background:rgba(255,255,255,0.1); color:#fff;">Back</button>
+                            <button class="btn-modal btn-primary-modal" onclick="nextTraining()" id="btnNextTrain">Initiate Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUIZ MODAL -->
+                <div id="quizModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Security Evaluation</h2>
+                            <button class="close-modal" onclick="closeModal('quizModal')" style="background:none; border:none; color:#fff; cursor:pointer; font-size:1.5rem;">&times;</button>
+                        </div>
+                        <div class="progress-bar-container"><div class="progress-fill" id="quizProgress"></div></div>
+                        <div id="quizContainer">
+                            <div class="step-indicator" id="quizStep" style="color:var(--cyber-cyan); font-family:'JetBrains Mono'; margin-bottom:10px;"></div>
+                            <h3 id="quizQuestion" style="margin-bottom: 25px; line-height:1.4;"></h3>
+                            <div id="quizOptions"></div>
+                            <div id="quizFeedback" class="feedback-text"></div>
+                            <div class="nav-btn-group" style="display:flex; justify-content:flex-end; margin-top:20px;">
+                                <button class="btn-modal btn-primary-modal" onclick="submitAnswer()" id="btnQuizAction">Verify Credentials</button>
+                            </div>
+                        </div>
+                        <div id="quizResult" style="display: none; text-align: center;">
+                            <i class="fa-solid fa-shield-check" style="font-size: 4rem; color: var(--cyber-cyan); margin-bottom: 20px;"></i>
+                            <h2>Audit Complete</h2>
+                            <p style="font-size: 1.5rem; margin: 15px 0;">Clearance Level: <span id="finalScore" style="color:var(--cyber-cyan); font-weight:bold;">0</span> / 10</p>
+                            <p id="scoreMsg" style="color:#ccd6f6; margin-bottom:25px;"></p>
+                            <button class="btn-modal btn-primary-modal" onclick="closeModal('quizModal')">Exit System</button>
+                            <button class="btn-modal" onclick="resetQuiz()" style="background:rgba(255,255,255,0.1); color:#fff; margin-left:10px;">Re-Audit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="timeoutModal" class="modal-overlay">
+                    <div class="modal-content" style="text-align: center;">
+                        <h2 style="color: var(--emergency-red);">Audit Timeout</h2>
+                        <p style="margin: 20px 0;">Your 180-second surveillance window has closed.</p>
+                        <button class="btn-modal btn-primary-modal" onclick="finishSession()">Begin Assessment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const trainingData = [
+            { title: "Physical Security", content: "<p>The #1 vulnerability in any facility is <b>Tailgating</b>. This happens when an unauthorized person follows you through a secure door.</p><p><b>The Rule:</b> One badge, one entry. Never hold the door for someone you don't recognize.</p>" },
+            { title: "Phishing Intelligence", content: "<p>Attackers use <b>Urgency</b> to make you click malicious links. Always verify the sender's full email address.</p><p><b>Pro-tip:</b> Hover over links to see the real destination before clicking.</p>" },
+            { title: "Hardware Integrity", content: "<p>A lost <b>USB Drive</b> is a common 'Baiting' tactic. Plugging it in can execute hidden scripts that steal your session tokens in milliseconds.</p><p><b>Action:</b> Report all found media to IT Security.</p>" },
+            { title: "Workstation Protocol", content: "<p>An unlocked PC is a direct portal into the company network. Even a 60-second absence is enough for a data breach.</p><p><b>Habit:</b> Always press <b>Windows + L</b> before leaving your seat.</p>" },
+            { title: "Mobile & BYOD", content: "<p>Public charging stations can perform <b>Juice Jacking</b>, stealing data through the charging cable. </p><p><b>Safety:</b> Use only your own wall charger and avoid corporate network use on unmanaged personal phones.</p>" },
+            { title: "Social Engineering", content: "<p>Hackers often call posing as <b>IT Support</b> asking for your MFA (Multi-Factor) code or password reset.</p><p><b>Fact:</b> Real IT staff will NEVER ask for your password or your 6-digit MFA code.</p>" }
+        ];
+
+        const quizData = [
+            { q: "You receive an email from 'HR' with a link to 'View Updated Salaries'. The URL looks like 'safe360-hr.portal.com'. What is the risk?", options: ["It's safe, it has a lock icon.", "Phishing - the domain is likely fake.", "None, HR sends these often.", "It's safe if I use my work PC."], correct: 1 },
+            { q: "You find a USB stick in the breakroom labeled 'Confidential Q4 Layout'. What is the safest action?", options: ["Check the files to find the owner.", "Give it to the office manager.", "Hand it to IT Security immediately.", "Format it and use it for personal files."], correct: 2 },
+            { q: "A person carrying heavy boxes asks you to hold the secure door open. You don't see a badge. What do you do?", options: ["Help them out and hold the door.", "Politely ask them to use their badge first.", "Let them in but watch where they go.", "Ignore them and walk away."], correct: 1 },
+            { q: "What is 'Juice Jacking'?", options: ["Stealing someone's lunch.", "Data theft via public USB charging ports.", "Overloading a server's power.", "A type of phishing email."], correct: 1 },
+            { q: "A caller claims to be from IT and asks for your 6-digit MFA code to fix a sync error. Do you provide it?", options: ["Yes, if they sound professional.", "No, IT never asks for MFA codes.", "Only if I'm at my desk.", "Yes, it's safer than a password."], correct: 1 },
+            { q: "Which shortcut locks a Windows workstation instantly?", options: ["Ctrl + Alt + Del", "Ctrl + L", "Windows + L", "Alt + F4"], correct: 2 },
+            { q: "What does 'MFA' provide?", options: ["Faster login speeds.", "An extra layer of security beyond passwords.", "Automatic password updates.", "Secure Wi-Fi encryption."], correct: 1 },
+            { q: "Why should you avoid using the same password for personal and work accounts?", options: ["It's against the law.", "If one site is hacked, both accounts are lost.", "It's too hard to remember.", "The IT department can see your personal files."], correct: 1 },
+            { q: "What is the primary sign of a phishing email?", options: ["A friendly greeting.", "A sense of extreme urgency.", "High-quality images.", "A long signature."], correct: 1 },
+            { q: "You see a suspicious person taking photos of server equipment. Whom should you contact?", options: ["Your supervisor.", "IT Security or Building Security.", "The local police.", "Nobody, they are likely a contractor."], correct: 1 }
+        ];
+
+        let timeLeft = 180;
+        let timerInterval;
+        let trainIndex = 0;
+        let quizIndex = 0;
+        let score = 0;
+        let quizAnswered = false;
+        let selectedOptionIndex = null;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timeoutModal').style.display = 'flex';
+                } else {
+                    timeLeft--;
+                    const m = Math.floor(timeLeft / 60);
+                    const s = timeLeft % 60;
+                    document.getElementById('sessionTimer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+        window.onload = startTimer;
+
+        function toggleFullScreen() {
+            const elem = document.getElementById('tourViewport');
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                if (elem.requestFullscreen) elem.requestFullscreen();
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
+        function openTraining() { 
+            trainIndex = 0; 
+            updateTrainingUI(); 
+            document.getElementById('trainingModal').style.display = 'flex'; 
+        }
+
+        function updateTrainingUI() {
+            const data = trainingData[trainIndex];
+            document.getElementById('trainingTitle').innerText = data.title;
+            document.getElementById('trainingStep').innerText = `MODULE: 0${trainIndex + 1} / 06`;
+            document.getElementById('trainingBody').innerHTML = data.content;
+            document.getElementById('trainProgress').style.width = ((trainIndex + 1) / 6 * 100) + "%";
+            document.getElementById('btnPrevTrain').style.visibility = (trainIndex === 0) ? 'hidden' : 'visible';
+            document.getElementById('btnNextTrain').innerText = (trainIndex === 5) ? 'COMPLETE' : 'CONTINUE';
+        }
+
+        function nextTraining() {
+            if(trainIndex < 5) { trainIndex++; updateTrainingUI(); } 
+            else { closeModal('trainingModal'); }
+        }
+
+        function prevTraining() { if(trainIndex > 0) { trainIndex--; updateTrainingUI(); } }
+
+        function openQuiz() { resetQuiz(); document.getElementById('quizModal').style.display = 'flex'; }
+        
+        function resetQuiz() { 
+            quizIndex = 0; score = 0; 
+            document.getElementById('quizResult').style.display = 'none'; 
+            document.getElementById('quizContainer').style.display = 'block'; 
+            updateQuizUI(); 
+        }
+
+        function updateQuizUI() {
+            quizAnswered = false; selectedOptionIndex = null;
+            const data = quizData[quizIndex];
+            document.getElementById('quizStep').innerText = `EVALUATION: ${quizIndex + 1} / 10`;
+            document.getElementById('quizQuestion').innerText = data.q;
+            document.getElementById('quizProgress').style.width = ((quizIndex + 1) / 10 * 100) + "%";
+            document.getElementById('quizFeedback').style.display = 'none';
+            document.getElementById('btnQuizAction').innerText = "VERIFY ANSWER";
+            const optionsDiv = document.getElementById('quizOptions'); optionsDiv.innerHTML = '';
+            data.options.forEach((opt, idx) => {
+                const el = document.createElement('div');
+                el.className = 'quiz-option';
+                el.innerHTML = `<span style="font-family:'JetBrains Mono'; opacity:0.5;">0${idx+1}</span> ${opt}`;
+                el.onclick = () => { if(!quizAnswered) { document.querySelectorAll('.quiz-option').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); selectedOptionIndex = idx; } };
+                optionsDiv.appendChild(el);
+            });
+        }
+
+        function submitAnswer() {
+            if(selectedOptionIndex === null) return;
+            if(quizAnswered) { nextQuestion(); return; }
+            
+            quizAnswered = true;
+            const data = quizData[quizIndex];
+            const feedback = document.getElementById('quizFeedback');
+            const options = document.querySelectorAll('.quiz-option');
+            
+            feedback.style.display = 'block';
+            if(selectedOptionIndex === data.correct) {
+                score++;
+                options[selectedOptionIndex].classList.add('correct');
+                feedback.innerHTML = '<i class="fa-solid fa-check-circle"></i> ACCESS GRANTED: DATA SECURED';
+                feedback.style.color = "var(--success-green)";
+            } else {
+                options[selectedOptionIndex].classList.add('wrong');
+                options[data.correct].classList.add('correct');
+                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ACCESS DENIED: VULNERABILITY DETECTED';
+                feedback.style.color = "var(--emergency-red)";
+            }
+
+            const btn = document.getElementById('btnQuizAction');
+            btn.innerText = (quizIndex < 9) ? "NEXT CHALLENGE" : "VIEW EVALUATION";
+        }
+
+        function nextQuestion() { 
+            if(quizIndex < 9) { quizIndex++; updateQuizUI(); } 
+            else { showResults(); } 
+        }
+
+        function showResults() { 
+            document.getElementById('quizContainer').style.display = 'none'; 
+            document.getElementById('quizResult').style.display = 'block'; 
+            document.getElementById('finalScore').innerText = score; 
+            const msg = score >= 8 ? "SECURITY STATUS: ELITE" : "SECURITY STATUS: COMPROMISED - REVIEW NEEDED";
+            document.getElementById('scoreMsg').innerText = msg;
+        }
+
+        function finishSession() { closeModal('timeoutModal'); openQuiz(); }
+
+        const viewport = document.getElementById('tourViewport');
+        const panorama = document.getElementById('panorama');
+        let isDragging = false;
+        let startX, startY;
+        viewport.addEventListener('mousedown', (e) => { isDragging = true; startX = e.pageX - panorama.offsetLeft; startY = e.pageY - panorama.offsetTop; viewport.style.cursor = 'grabbing'; });
+        viewport.addEventListener('mouseleave', () => isDragging = false);
+        viewport.addEventListener('mouseup', () => { isDragging = false; viewport.style.cursor = 'grab'; });
+        viewport.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let newLeft = e.pageX - startX; let newTop = e.pageY - startY;
+            if (newLeft > 0) newLeft = 0; if (newLeft < viewport.offsetWidth - 4500) newLeft = viewport.offsetWidth - 4500;
+            if (newTop > 0) newTop = 0; if (newTop < viewport.offsetHeight - 1500) newTop = viewport.offsetHeight - 1500;
+            panorama.style.left = newLeft + 'px'; panorama.style.top = newTop + 'px';
+        });
+    </script>
+</body>
+</html>

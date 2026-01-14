@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Safe360</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Styles for the Popup Notification */
+        .notification-popup {
+            visibility: hidden; /* Hidden by default */
+            min-width: 300px;
+            background-color: var(--secondary, #2ecc71); /* Green success color */
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s, bottom 0.5s;
+        }
+
+        /* Class to show the popup */
+        .notification-popup.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px; /* Slight slide-up effect */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <!-- LOGO -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="360-view.html">360° Simulator</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="contact-box">
+                    <div class="section-header">
+                        <h2>Get in Touch</h2>
+                        <p>We typically respond within 24 hours.</p>
+                    </div>
+                    <!-- Form with ID for JavaScript selection -->
+                    <form id="contactForm">
+                        <input type="text" placeholder="Full Name" required>
+                        <input type="email" placeholder="Email Address" required>
+                        <textarea placeholder="How can we help?" rows="5" required></textarea>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="back-nav">
+                    <a href="index.html" class="btn-back">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- The Popup Notification Element -->
+    <div id="successPopup" class="notification-popup">
+        <i class="fa-solid fa-circle-check"></i> Message sent successfully!
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Stop page reload
+
+            // Get the popup element
+            var popup = document.getElementById("successPopup");
+
+            // Show the popup
+            popup.className = "notification-popup show";
+
+            // Clear the form fields
+            this.reset();
+
+            // Hide the popup after 3 seconds
+            setTimeout(function(){ 
+                popup.className = popup.className.replace("show", ""); 
+            }, 3000);
+        });
+    </script>
+
+    <!-- Original script logic if needed -->
+    <script src="js/script.js"></script>
+</body>
+</html>

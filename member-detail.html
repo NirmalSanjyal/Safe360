@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Profile | Safe360</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <!-- LOGO CHANGED HERE -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            
+            <!-- Added margin-left: auto to push the button to the right -->
+            <a href="team.html" class="btn-back" style="margin-left: auto;"><i class="fa-solid fa-arrow-left"></i> Back to Team</a>
+        </div>
+    </header>
+
+    <main class="section light-bg">
+        <div class="container">
+            <div id="member-content">
+                <!-- Data Injected by JS -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const teamData = {
+            "nirmal": {
+                name: "Nirmal Sanjyal",
+                role: "Project Lead & Architect",
+                image: "images/nirmal.jpg",
+                bio: "Nirmal leads the Safe360 initiative with a focus on enterprise architecture and strategic safety integration.",
+                expertise: ["System Architecture", "Project Management", "Risk Assessment"],
+                contribution: "Designed the core framework of Safe360 and managed the CET257 project lifecycle."
+            },
+            "aliza": {
+                name: "Aliza Shrestha",
+                role: "Lead Full Stack Developer",
+                image: "images/aliza.jpg",
+                bio: "Aliza is responsible for the technical backbone of Safe360, ensuring high performance and cloud scalability.",
+                expertise: ["Full Stack Development", "Cloud Infrastructure", "API Design"],
+                contribution: "Developed the dynamic data injection engines and real-time reporting modules."
+            },
+            "sosang": {
+                name: "Sosang Lama",
+                role: "Head of Product Design",
+                image: "images/sosang.jpg",
+                bio: "Sosang ensures that Safe360 is accessible and intuitive for users on the warehouse floor.",
+                expertise: ["UI/UX Design", "User Research", "Visual Branding"],
+                contribution: "Created the entire visual identity and user interface of the Safe360 platform."
+            },
+            "sushant": {
+                name: "Sushant K.c",
+                role: "Compliance Specialist",
+                image: "images/sushant.jpg",
+                bio: "Sushant bridges the gap between technology and international safety regulations.",
+                expertise: ["OSHA Standards", "ISO 45001", "Regulatory Auditing"],
+                contribution: "Ensured every digital form and report meets strict global safety compliance standards."
+            },
+            "sandeep": {
+                name: "Sandeep Belbase",
+                role: "Cybersecurity Analyst",
+                image: "images/sandeep.jpg",
+                bio: "Sandeep protects the sensitive safety data of organizations from external threats.",
+                expertise: ["Data Encryption", "Network Security", "Risk Mitigation"],
+                contribution: "Implemented security protocols to ensure 100% data integrity and user privacy."
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const container = document.getElementById('member-content');
+
+            if (id && teamData[id]) {
+                const m = teamData[id];
+                container.innerHTML = `
+                    <div class="contact-box" style="max-width: 900px; text-align: left; background: white; margin: auto; padding: 50px;">
+                        <div style="display: flex; gap: 40px; align-items: center; margin-bottom: 40px; flex-wrap: wrap;">
+                            <img src="${m.image}" alt="${m.name}" style="width: 200px; height: 200px; border-radius: 20px; object-fit: cover; border: 5px solid var(--light);">
+                            <div>
+                                <h1 style="color: var(--primary); font-size: 2.5rem; margin-bottom: 10px;">${m.name}</h1>
+                                <span class="badge" style="background: var(--secondary); color: white; padding: 5px 15px;">${m.role}</span>
+                                <div style="margin-top: 20px;">
+                                    <a href="#" style="margin-right: 15px; color: var(--gray); font-size: 1.5rem;"><i class="fa-brands fa-linkedin"></i></a>
+                                    <a href="#" style="color: var(--gray); font-size: 1.5rem;"><i class="fa-brands fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; gap: 30px;">
+                            <div>
+                                <h3 style="color: var(--primary); border-bottom: 2px solid var(--light); padding-bottom: 10px; margin-bottom: 15px;">Biography</h3>
+                                <p style="line-height: 1.8; color: #444; font-size: 1.1rem;">${m.bio}</p>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                <div style="background: var(--light); padding: 25px; border-radius: 15px;">
+                                    <h4 style="color: var(--secondary); margin-bottom: 15px;">Core Expertise</h4>
+                                    <ul style="list-style: none; padding: 0;">
+                                        ${m.expertise.map(skill => `<li style="margin-bottom: 8px;"><i class="fa-solid fa-check-circle" style="color: var(--secondary); margin-right: 10px;"></i> ${skill}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div style="background: var(--primary); color: white; padding: 25px; border-radius: 15px;">
+                                    <h4 style="color: var(--accent); margin-bottom: 15px;">Project Contribution</h4>
+                                    <p style="font-size: 0.95rem; opacity: 0.9;">${m.contribution}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<div style="text-align:center;"><h1>Member Not Found</h1><a href="team.html" class="btn btn-primary">Back to Team</a></div>`;
+            }
+        });
+    </script>
+</body>
+</html>

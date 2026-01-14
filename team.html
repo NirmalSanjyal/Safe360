@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | Safe360 Enterprise</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Specific Team Page Styles */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+        
+        .team-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: var(--transition);
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            text-decoration: none; /* Removes underline from links */
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .member-img {
+            width: 110px;
+            height: 110px;
+            background: var(--light);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: var(--primary);
+            border: 3px solid #eee;
+            overflow: hidden; /* Ensures image stays in circle */
+        }
+
+        /* Ensures the photo fits the circle perfectly */
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+
+        .role {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 1.2px;
+        }
+
+        .member-bio {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 25px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-container">
+        <!-- LOGO CHANGED HERE -->
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="team.html" class="active">Team</a></li>
+                <li><a href="contact.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="section">
+        <div class="container">
+            <div class="back-nav">
+                <a href="index.html" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+            
+            <div class="section-header">
+                <span class="badge">The Minds Behind Safe360</span>
+                <h2>Meet Our Team</h2>
+                <p class="section-desc">A group of dedicated professionals collaborating to deliver the next generation of workplace safety solutions.</p>
+            </div>
+
+            <div class="team-grid">
+                <!-- Member 1: Nirmal Sanjyal -->
+                <a href="member-detail.html?id=nirmal" class="team-card">
+                    <div class="member-img">
+                        <img src="images/nirmal.jpg" alt="Nirmal Sanjyal">
+                    </div>
+                    <h3>Nirmal Sanjyal</h3>
+                    <span class="role">Project Lead & Architect</span>
+                    <p class="member-bio">Leading the strategic vision and system design to ensure Safe360 meets standards.</p>
+                    <span class="btn-text" style="color: var(--secondary); font-weight:700; font-size: 0.8rem; text-transform:uppercase;">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Member 2: Aliza Shrestha -->
+                <a href="member-detail.html?id=aliza" class="team-card">
+                    <div class="member-img">
+                        <img src="images/aliza.jpg" alt="Aliza Shrestha">
+                    </div>
+                    <h3>Aliza Shrestha</h3>
+                    <span class="role">Lead Full Stack Developer</span>
+                    <p class="member-bio">Expert in cloud-native infrastructure and building high-performance engines.</p>
+                    <span class="btn-text" style="color: var(--secondary); font-weight:700; font-size: 0.8rem; text-transform:uppercase;">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Member 3: Sosang Lama -->
+                <a href="member-detail.html?id=sosang" class="team-card">
+                    <div class="member-img">
+                        <img src="images/sosang.jpg" alt="Sosang Lama">
+                    </div>
+                    <h3>Sosang Lama</h3>
+                    <span class="role">Head of Product Design</span>
+                    <p class="member-bio">Focusing on user-centric design to ensure the platform is intuitive and accessible.</p>
+                    <span class="btn-text" style="color: var(--secondary); font-weight:700; font-size: 0.8rem; text-transform:uppercase;">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Member 4: Sushant K.c -->
+                <a href="member-detail.html?id=sushant" class="team-card">
+                    <div class="member-img">
+                        <img src="images/sushant.jpg" alt="Sushant K.c">
+                    </div>
+                    <h3>Sushant K.c</h3>
+                    <span class="role">Compliance Specialist</span>
+                    <p class="member-bio">Ensuring all platform features align with international safety standards.</p>
+                    <span class="btn-text" style="color: var(--secondary); font-weight:700; font-size: 0.8rem; text-transform:uppercase;">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                
+                <!-- Member 5: Sandeep Belbase -->
+                <a href="member-detail.html?id=sandeep" class="team-card">
+                    <div class="member-img">
+                        <img src="images/sandeep.jpg" alt="Sandeep Belbase">
+                    </div>
+                    <h3>Sandeep Belbase</h3>
+                    <span class="role">Cybersecurity Analyst</span>
+                    <p class="member-bio">Maintaining the integrity and security of organizational data and privacy.</p>
+                    <span class="btn-text" style="color: var(--secondary); font-weight:700; font-size: 0.8rem; text-transform:uppercase;">View Profile <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2024 Safe360 Enterprise Project. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

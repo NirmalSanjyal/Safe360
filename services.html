@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Safe360 Enterprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Make links look like cards */
+        a.card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        /* Ensure the hover effect works on the anchor tag */
+        a.card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-container">
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+        </a>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html" class="active">Services</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="contact.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="section light-bg">
+        <div class="container">
+            <div class="back-nav">
+                <a href="index.html" class="btn-back">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            <div class="section-header">
+                <span class="badge">Our Capabilities</span>
+                <h2>Comprehensive Safety Solutions</h2>
+                <p class="section-desc">Click on any service below to explore the technical details and implementation benefits.</p>
+            </div>
+
+            <div class="cards">
+                <!-- Linked Service Cards -->
+                
+                <!-- Service 1 -->
+                <a href="service-detail.html?id=reporting" class="card">
+                    <i class="fa-solid fa-bolt-lightning icon"></i>
+                    <h3>Digital Incident Reporting</h3>
+                    <p>Enable workers to report hazards or near-misses instantly via mobile with GPS tagging.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Service 2 -->
+                <a href="service-detail.html?id=risk" class="card">
+                    <i class="fa-solid fa-shield-halved icon"></i>
+                    <h3>Smart Risk Assessment</h3>
+                    <p>Utilize data-driven tools to conduct Job Safety Analysis (JSA) and identify high-risk zones.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Service 3 -->
+                <a href="service-detail.html?id=lms" class="card">
+                    <i class="fa-solid fa-graduation-cap icon"></i>
+                    <h3>LMS & Training Tracking</h3>
+                    <p>Manage employee certifications and automate expiration notifications in one place.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Service 4 -->
+                <a href="service-detail.html?id=analytics" class="card">
+                    <i class="fa-solid fa-chart-line icon"></i>
+                    <h3>Predictive Analytics</h3>
+                    <p>Transform raw safety data into visual dashboards to predict potential incident trends.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Service 5 -->
+                <a href="service-detail.html?id=compliance" class="card">
+                    <i class="fa-solid fa-file-circle-check icon"></i>
+                    <h3>Compliance Auditing</h3>
+                    <p>Simplify ISO 45001 and OSHA audits with digital checklists and automated reporting.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+
+                <!-- Service 6 -->
+                <a href="service-detail.html?id=emergency" class="card">
+                    <i class="fa-solid fa-truck-medical icon"></i>
+                    <h3>Emergency Response</h3>
+                    <p>Digital emergency blueprints and real-time headcounts during critical evacuations.</p>
+                    <span style="color: var(--secondary); font-size: 0.9rem; font-weight: bold; margin-top: 15px; display: block;">View Details <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <p style="margin-bottom: 20px; color: var(--gray);">Need a custom solution for your industry?</p>
+                <a href="contact.html" class="btn btn-primary">Speak with a Consultant</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="logo.png" alt="Safe360 Logo" style="max-height: 80px; width: auto; display: block; margin: 0 auto 15px auto;">
+            </div>
+            <p>© 2024 Enterprise Project CET257. All Rights Reserved.</p>
+            <div class="socials">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

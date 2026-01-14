@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe360 | Interactive Safety Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <!-- LOGO CHANGED HERE -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Safe360 Training Systems" style="max-height: 150px; width: auto; vertical-align: middle;">
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="360-view.html">360° Simulator</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html" class="nav-btn">Get Started</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-inner">
+                <div class="hero-content">
+                    <span class="hero-badge"><i class="fa-solid fa-bolt"></i> Live Simulation Available</span>
+                    <h1>Virtual Risk <br><span class="text-gradient">Intelligence.</span></h1>
+                    <p>Enter our immersive 360° environment to identify and mitigate enterprise security threats in real-time.</p>
+                    
+                    <div class="hero-actions">
+                        <a href="360-view.html" class="btn btn-tour">
+                            <i class="fa-solid fa-play"></i> Launch 360° Simulator
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Professional Section replacing the cards -->
+        <section class="section">
+            <div class="container" style="text-align: center;">
+                <div class="section-header">
+                    <span class="badge">Training Module</span>
+                    <h2>The Safe360 Method</h2>
+                    <p>Our simulator places you in a high-stakes warehouse environment where you must locate 6 hidden cybersecurity risks.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px;">
+                    <div class="pillar-card border-blue">
+                        <i class="fa-solid fa-eye" style="font-size: 2rem; color: var(--secondary); margin-bottom: 15px;"></i>
+                        <h3>Locate</h3>
+                        <p>Scan the environment for suspicious objects or behaviors.</p>
+                    </div>
+                    <div class="pillar-card border-cyan">
+                        <i class="fa-solid fa-hand-pointer" style="font-size: 2rem; color: var(--accent); margin-bottom: 15px;"></i>
+                        <h3>Identify</h3>
+                        <p>Interact with hotspots to understand the specific risk level.</p>
+                    </div>
+                    <div class="pillar-card border-navy">
+                        <i class="fa-solid fa-shield-check" style="font-size: 2rem; color: var(--primary); margin-bottom: 15px;"></i>
+                        <h3>Protect</h3>
+                        <p>Learn the correct enterprise protocols to neutralize threats.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
